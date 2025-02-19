@@ -1,0 +1,27 @@
+name: Java CI - Build and Test
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build and Test with Maven
+    runs-on: ubuntu-latest
+
+    steps:
+      # Passo 1: Baixar o código do repositório
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Passo 2: Configurar JDK (Java Development Kit)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'  # Distribuição Eclipse Temurin (antigo Adoptium)
+          java-version: '17'
+          cache: 'maven'  # Habilita cache para dependências Maven
+
+      # Passo 3: Construir e testar o projeto com Maven
+      - name: Build and test with Maven
+        run: mvn clean test
